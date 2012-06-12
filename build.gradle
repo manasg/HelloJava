@@ -3,3 +3,19 @@ task hello {
         println 'Hello world!'
     }
 }
+
+apply plugin: 'java'
+
+sourceSets {
+    main {
+        java { srcDir 'src' }
+    }
+}
+
+def prop_file = 'some.properties'
+task runHello( dependsOn: [compileJava], type: JavaExec ) {
+    args( [file(prop_file).canonicalPath] )
+    main = 'just.testing.Hello'
+    classpath sourceSets.main.runtimeClasspath
+}
+
